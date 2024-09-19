@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+
+{% block 'content' %}
+    <div class="bg-info" style="flex:1;  display:flex; flex-direction:column; gap:0.5rem; justify-content: center; align-items:center;" > 
+        <h1 style="text-align:center; text-transform:capitalize;">admin login</h1>
+        <form action="{% url "admin-authenticate" %}"  style="width:100%; display:flex; flex-direction:column; align-items:center; gap:1rem;" method="post">
+            {% csrf_token %} 
+            <input class="form-control" style="width:35%;" type="text" name= "username" placeholder="username"/>
+            <input class="form-control" style="width:35%;"  type="password" name= "password" placeholder="password"/>
+            <input   type="submit" value='login' class="btn btn-success" style="width:35%;" />
+        </form>
+        {% for message in messages  %}
+            <h6 style="text-align:center; text-transform:capitalize;"  class="text-danger">{{message}}</h6>
+        {% endfor %}
+    </div>
+{% endblock 'content' %}

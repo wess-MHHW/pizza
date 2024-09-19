@@ -1,0 +1,16 @@
+# VSCode settings
+.vscode/
+
+# virtual environment 
+venv/
+
+# media files
+src/media/
+
+# Ignore migrations
+migrations/
+*.pyc
+*.pyo
+
+# database
+*.sqlite3
