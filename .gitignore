@@ -8,6 +8,7 @@ venv/
 src/media/
 
 # Ignore migrations
+__pycache__/
 migrations/
 *.pyc
 *.pyo

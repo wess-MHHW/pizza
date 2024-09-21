@@ -1,0 +1,42 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block 'content' %}
+<nav class="navbar navbar-light bg-light " style="padding-inline:2rem; gap:1rem;">
+    <a class="navbar-brand" style="text-transform:capitalize;">Welcome {{user.username}}</a>
+    <a style="margin-left:auto" class="btn btn-outline-info my-2 my-sm-0" href="{% url "customer-orders" %}">Orders</a>
+    <a  class="btn btn-outline-danger my-2 my-sm-0" href="{% url "customer-logout" %}">Logout</a>
+  
+</nav>
+
+{% for message in messages %}
+<p class="bg-{{ message.tags }} text-white text-center" style="padding:1rem; margin:0;">{{message}}</p>
+{% endfor %}
+{% if  pizzas %}
+<form method="post" action="{% url "customer-order" %}">
+    {% csrf_token %}
+    <table class="container" style="width:520px; margin-inline:auto; margin-top:1rem; border:1px solid black;">
+        <tr style="border:1px solid black;">
+          <th style="border:1px solid black; padding:1rem;">Pizza name</th>
+          <th style="border:1px solid black; padding:1rem;">Price</th>
+        </tr>
+        
+        {% for pizza in pizzas %}
+        <tr style="border:1px solid black;">
+          <td style="border:1px solid black; padding:1rem;">{{pizza.name}}</td>
+          <td style="border:1px solid black; padding:1rem;">{{pizza.price}}$</td>
+          <td style="border:1px solid black; padding:1rem;"><input type="number" name="{{pizza.id}}" value="0" style="width:60px" required min="0"/></td>
+          <td style="border:1px solid black; padding:1rem; "><a href="/admin/delete-pizza/{{pizza.id}}" class="btn btn-danger">Delete</a></td>
+        </tr>{% endfor %}
+      </table>
+      
+      <div class="container" style="display:flex; align-items:center; justify-content:center; gap:10px; margin-top:3rem;">
+          <input type="text" 
+            placeholder="address" class="form-control" name="address" style="width:420px;" required/>
+          <input type="submit" style="width:100px" class="btn btn-success" value="Place order"/>
+      </div>
+</form>
+{% endif %}
+
+{% endblock 'content' %}
+

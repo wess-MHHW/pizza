@@ -1,0 +1,46 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block 'content' %}
+<nav class="navbar navbar-light bg-light " style="padding-inline:2rem; gap:1rem;">
+    <a class="navbar-brand" style="text-transform:capitalize;">Welcome {{user.username}}</a>
+    <a style="margin-left:auto" class="btn btn-outline-info my-2 my-sm-0" href="{% url "customer-orders" %}">Orders</a>
+    <a  class="btn btn-outline-danger my-2 my-sm-0" href="{% url "customer-logout" %}">Logout</a>
+  
+</nav>
+
+{% for message in messages %}
+<p class="bg-{{ message.tags }} text-white text-center" style="padding:1rem; margin:0;">{{message}}</p>
+{% endfor %}
+<h1 style="text-align:center; text-transform:capitalize; padding:1rem; ">Orders</h1>
+
+{% if  orders %}
+{% for order in orders  %}
+<div class="alert alert-warning " style="width:600px; margin-inline:auto;">
+    <p>User: {{order.user.user.username}}</p>
+    <p>Phone number: {{order.user.phone}}</p>
+    <p>Address: {{order.address}}</p>
+    <p>Date: {{order.created_at}}</p>
+    <p>Status: {{order.status}}</p>
+
+   
+        {% for item in order.items %}
+        <p>{{item.pizza.name}}: {{item.pizza.price}}$ (X{{item.quantity}})</p>
+    {% endfor %}
+  
+    <p class="fw-bold">Total: {{order.total}}$</p>
+ 
+   
+</div>
+
+{% endfor %}
+
+
+{% else %}
+<a href="{% url 'customer-home' %}" class="btn btn-light text-dark">Oops! It looks like you haven't ordered any delicious pizzas yet. Head back to our menu and place your first order!</a>
+{% endif %}
+
+
+
+{% endblock 'content' %}
+

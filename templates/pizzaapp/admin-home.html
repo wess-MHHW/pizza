@@ -1,9 +1,41 @@
 {% extends "base/base.html" %}
 
 {% block 'content' %}
-<nav class="navbar navbar-light bg-light justify-content-between" style="padding-inline:2rem;">
-    <a class="navbar-brand">Admin panel</a>
-    <a class="btn btn-outline-danger my-2 my-sm-0" href="/admin/logout/">Logout</a>
-  </nav>
+<nav class="navbar navbar-light bg-light " style="padding-inline:2rem; gap:1rem;">
+  <a class="navbar-brand" style="text-transform:capitalize;">Admin panel</a>
+  <a style="margin-left:auto" class="btn btn-outline-info my-2 my-sm-0" href="{% url "admin-orders" %}">Orders</a>
+  <a  class="btn btn-outline-danger my-2 my-sm-0" href="/admin/logout/">Logout</a>
+
+</nav>
+
+
+  <form action="{% url "admin-add-pizza" %}" method="post" style="margin-top:1rem;">
+    {% csrf_token %}
+    <div class="container" style="display:flex; align-items:center; justify-content:center; gap:10px">
+      <input type="text" 
+      placeholder="name" class="form-control" name="name" style="width:200px" required/>
+      <input type="text" 
+      placeholder="price" class="form-control" name="price" style="width:200px" required min="0"/>
+    <input type="submit" style="width:100px" class="btn btn-success" value="Add"/>
+    </div>
+
+  </form>
+  {% if  pizzas %}
+  <table class="container" style="width:520px; margin-inline:auto; margin-top:1rem; border:1px solid black;">
+    <tr style="border:1px solid black;">
+      <th style="border:1px solid black; padding:1rem;">Pizza name</th>
+      <th style="border:1px solid black; padding:1rem;">Price</th>
+    </tr>
+    
+    {% for pizza in pizzas %}
+    <tr style="border:1px solid black;">
+      <td style="border:1px solid black; padding:1rem;">{{pizza.name}}</td>
+      <td style="border:1px solid black; padding:1rem;">{{pizza.price}}$</td>
+      <td style="border:1px solid black; padding:1rem; "><a href="/admin/delete-pizza/{{pizza.id}}" class="btn btn-danger">Delete</a></td>
+    </tr>{% endfor %}
+  </table>
+  {% endif %}
+
+
 {% endblock 'content' %}
 
