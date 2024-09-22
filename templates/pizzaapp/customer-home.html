@@ -26,7 +26,6 @@
           <td style="border:1px solid black; padding:1rem;">{{pizza.name}}</td>
           <td style="border:1px solid black; padding:1rem;">{{pizza.price}}$</td>
           <td style="border:1px solid black; padding:1rem;"><input type="number" name="{{pizza.id}}" value="0" style="width:60px" required min="0"/></td>
-          <td style="border:1px solid black; padding:1rem; "><a href="/admin/delete-pizza/{{pizza.id}}" class="btn btn-danger">Delete</a></td>
         </tr>{% endfor %}
       </table>
       
